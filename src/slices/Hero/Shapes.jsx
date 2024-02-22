@@ -61,6 +61,12 @@ function Geometries() {
     },
   ];
 
+  const soundEffects = [
+    new Audio('/sounds/knock1.ogg'),
+    new Audio('/sounds/knock2.ogg'),
+    new Audio('/sounds/knock3.ogg'),
+  ];
+
   const materials = [
     new THREE.MeshNormalMaterial(),
     new THREE.MeshStandardMaterial({
@@ -107,12 +113,13 @@ function Geometries() {
       position={position.map((p) => p * 2)}
       geometry={geometry}
       materials={materials}
+      soundEffects={soundEffects}
       r={r}
     />
   ));
 }
 
-function Geometry({ r, position, geometry, materials }) {
+function Geometry({ r, position, geometry, materials, soundEffects }) {
   const meshRef = useRef();
   const [visible, setVisible] = useState(false);
 
@@ -124,6 +131,8 @@ function Geometry({ r, position, geometry, materials }) {
 
   function handleCLick(e) {
     const mesh = e.object;
+
+    gsap.utils.random(soundEffects).play();
 
     gsap.to(mesh.rotation, {
       x: `+=${gsap.utils.random(0, 2)}`,
