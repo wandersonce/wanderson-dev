@@ -69,7 +69,10 @@ export type HomepageDocument<Lang extends string = string> =
     Lang
   >;
 
-type PageDocumentDataSlicesSlice = TechListSlice | AboutSlice;
+type PageDocumentDataSlicesSlice =
+  | ContentindexSlice
+  | TechListSlice
+  | AboutSlice;
 
 /**
  * Content for Page documents
@@ -372,6 +375,101 @@ type AboutSliceVariation = AboutSliceDefault;
 export type AboutSlice = prismic.SharedSlice<"about", AboutSliceVariation>;
 
 /**
+ * Primary content in *Contentindex → Primary*
+ */
+export interface ContentindexSliceDefaultPrimary {
+  /**
+   * Heading field in *Contentindex → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: contentindex.primary.heading
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  heading: prismic.KeyTextField;
+
+  /**
+   * Content Type field in *Contentindex → Primary*
+   *
+   * - **Field Type**: Select
+   * - **Placeholder**: *None*
+   * - **API ID Path**: contentindex.primary.content_type
+   * - **Documentation**: https://prismic.io/docs/field#select
+   */
+  content_type: prismic.SelectField<"Blog" | "Project">;
+
+  /**
+   * Description field in *Contentindex → Primary*
+   *
+   * - **Field Type**: Rich Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: contentindex.primary.description
+   * - **Documentation**: https://prismic.io/docs/field#rich-text-title
+   */
+  description: prismic.RichTextField;
+
+  /**
+   * View More Text field in *Contentindex → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: contentindex.primary.view_more_text
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  view_more_text: prismic.KeyTextField;
+
+  /**
+   * Fallback Item Image field in *Contentindex → Primary*
+   *
+   * - **Field Type**: Image
+   * - **Placeholder**: *None*
+   * - **API ID Path**: contentindex.primary.fallback_item_image
+   * - **Documentation**: https://prismic.io/docs/field#image
+   */
+  fallback_item_image: prismic.ImageField<never>;
+
+  /**
+   * test field in *Contentindex → Primary*
+   *
+   * - **Field Type**: Text
+   * - **Placeholder**: *None*
+   * - **API ID Path**: contentindex.primary.test
+   * - **Documentation**: https://prismic.io/docs/field#key-text
+   */
+  test: prismic.KeyTextField;
+}
+
+/**
+ * Default variation for Contentindex Slice
+ *
+ * - **API ID**: `default`
+ * - **Description**: Default
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ContentindexSliceDefault = prismic.SharedSliceVariation<
+  "default",
+  Simplify<ContentindexSliceDefaultPrimary>,
+  never
+>;
+
+/**
+ * Slice variation for *Contentindex*
+ */
+type ContentindexSliceVariation = ContentindexSliceDefault;
+
+/**
+ * Contentindex Shared Slice
+ *
+ * - **API ID**: `contentindex`
+ * - **Description**: Contentindex
+ * - **Documentation**: https://prismic.io/docs/slice
+ */
+export type ContentindexSlice = prismic.SharedSlice<
+  "contentindex",
+  ContentindexSliceVariation
+>;
+
+/**
  * Primary content in *Hero → Primary*
  */
 export interface HeroSliceDefaultPrimary {
@@ -527,6 +625,10 @@ declare module "@prismicio/client" {
       AboutSliceDefaultPrimary,
       AboutSliceVariation,
       AboutSliceDefault,
+      ContentindexSlice,
+      ContentindexSliceDefaultPrimary,
+      ContentindexSliceVariation,
+      ContentindexSliceDefault,
       HeroSlice,
       HeroSliceDefaultPrimary,
       HeroSliceVariation,
