@@ -2,7 +2,7 @@
 
 import { Content } from '@prismicio/client';
 import { SliceComponentProps } from '@prismicio/react';
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 import { MdCircle } from 'react-icons/md';
 import { gsap } from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
@@ -21,10 +21,46 @@ export type TechListProps = SliceComponentProps<Content.TechListSlice>;
  * Component for "TechList" Slices.
  */
 const TechList = ({ slice }: TechListProps): JSX.Element => {
+  const component = useRef(null);
+
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          markers: true,
+          start: 'top bottom',
+          end: 'bottom top',
+          scrub: 4,
+        },
+      });
+
+      tl.fromTo(
+        '.tech-row',
+        {
+          x: (index) => {
+            return index % 2 === 0
+              ? gsap.utils.random(600, 400)
+              : gsap.utils.random(-600, -400);
+          },
+        },
+        {
+          x: (index) => {
+            return index % 2 === 0
+              ? gsap.utils.random(-600, -400)
+              : gsap.utils.random(600, 400);
+          },
+        }
+      );
+    }, component);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
     <section
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
+      ref={component}
     >
       <Bounded as="div">
         <Heading size="xl" as="h2" className="mb-8">
