@@ -28,7 +28,7 @@
 				"__TYPE__": "LinkContent",
 				"value": {
 					"__TYPE__": "ExternalLink",
-					"url": "https://prismic.io"
+					"url": "http://twitter.com"
 				}
 			},
 			"avatar": {
@@ -53,17 +53,6 @@
 				"alt": null,
 				"__TYPE__": "ImageContent",
 				"thumbnails": {}
-			},
-			"resume_link": {
-				"__TYPE__": "LinkContent",
-				"value": {
-					"id": "mock_Media_link",
-					"kind": "image/jpeg",
-					"name": "mock_name",
-					"url": "https://source.unsplash.com/daily",
-					"size": "0",
-					"__TYPE__": "FileLink"
-				}
 			}
 		},
 		"items": []

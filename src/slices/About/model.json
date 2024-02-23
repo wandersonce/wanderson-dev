@@ -40,6 +40,7 @@
           "config": {
             "label": "Button Link",
             "placeholder": "",
+            "allowTargetBlank": true,
             "select": null
           }
         },
@@ -49,14 +50,6 @@
             "label": "Avatar",
             "constraint": {},
             "thumbnails": []
-          }
-        },
-        "resume_link": {
-          "type": "Link",
-          "config": {
-            "label": "Resume Link",
-            "placeholder": "",
-            "select": "media"
           }
         }
       },
