@@ -2,9 +2,12 @@
 
 import { Content, asImageSrc, isFilled } from '@prismicio/client';
 import gsap from 'gsap';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Link from 'next/link';
 import { useEffect, useRef, useState } from 'react';
 import { MdArrowOutward } from 'react-icons/md';
+
+gsap.registerPlugin(ScrollTrigger);
 
 type ContentListProps = {
   items: Content.BlogPostDocument[] | Content.ProjectDocument[];
@@ -21,6 +24,7 @@ export default function ContentList({
 }: ContentListProps) {
   const component = useRef(null);
   const revealRef = useRef(null);
+  const itemsRef = useRef<Array<HTMLLIElement | null>>([]);
   const [currentItem, setCurrentItem] = useState<null | number>(null);
   const lastMousePos = useRef({ x: 0, y: 0 });
 
@@ -45,7 +49,29 @@ export default function ContentList({
     setCurrentItem(null);
   };
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    let ctx = gsap.context(() => {
+      itemsRef.current.forEach((item) => {
+        gsap.fromTo(
+          item,
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1.3,
+            ease: 'elastic.out(1,0.3)',
+            scrollTrigger: {
+              trigger: item,
+              start: 'top bottom-=100px',
+              end: 'bottom center',
+              toggleActions: 'play none none none',
+            },
+          }
+        );
+      });
+      return () => ctx.revert();
+    }, component);
+  }, []);
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -77,6 +103,14 @@ export default function ContentList({
     return () => window.removeEventListener('mousemove', handleMouseMove);
   }, [currentItem]);
 
+  useEffect(() => {
+    contentImages.forEach((url) => {
+      if (!url) return;
+      const img = new Image();
+      img.src = url;
+    });
+  }, [contentImages]);
+
   return (
     <div>
       <ul
@@ -90,6 +124,7 @@ export default function ContentList({
                 key={index}
                 className="list-item opacity-0f"
                 onMouseEnter={() => onMouseEnter(index)}
+                ref={(el) => (itemsRef.current[index] = el)}
               >
                 <Link
                   target="_blank"
