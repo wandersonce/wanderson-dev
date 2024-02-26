@@ -122,7 +122,7 @@ export default function ContentList({
             {isFilled.keyText(item.data.title) && (
               <li
                 key={index}
-                className="opacity-0f list-item"
+                className="flex max-w-sm opacity-0 md:list-item md:max-w-full"
                 onMouseEnter={() => onMouseEnter(index)}
                 ref={(el) => (itemsRef.current[index] = el)}
               >
@@ -130,7 +130,7 @@ export default function ContentList({
                   target="_blank"
                   // @ts-ignore: Unreachable code error
                   href={item.data.link_to_source.url || "/"}
-                  className="flex flex-col justify-between border-t border-t-slate-100 py-10 text-slate-200 md:flex-row"
+                  className="flex flex-col items-start border-t border-t-slate-100 py-10 text-slate-200 md:flex-row md:justify-between"
                   aria-label={item.data.title}
                 >
                   <div className="flex flex-col">
@@ -143,7 +143,7 @@ export default function ContentList({
                       ))}
                     </div>
                   </div>
-                  <span className="ml-auto flex items-center gap-2 text-xl font-medium md:ml-0">
+                  <span className="ml-0 flex items-start gap-2 text-xl font-medium md:ml-auto md:items-center">
                     {viewMoreText} <MdArrowOutward />
                   </span>
                 </Link>

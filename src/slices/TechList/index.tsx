@@ -1,14 +1,14 @@
-'use client';
+"use client";
 
-import { Content } from '@prismicio/client';
-import { SliceComponentProps } from '@prismicio/react';
-import React, { useEffect, useRef } from 'react';
-import { MdCircle } from 'react-icons/md';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Content } from "@prismicio/client";
+import { SliceComponentProps } from "@prismicio/react";
+import React, { useEffect, useRef } from "react";
+import { MdCircle } from "react-icons/md";
+import { gsap } from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
-import Bounded from '@/components/Bounded';
-import Heading from '@/components/Heading';
+import Bounded from "@/components/Bounded";
+import Heading from "@/components/Heading";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -28,14 +28,14 @@ const TechList = ({ slice }: TechListProps): JSX.Element => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: component.current,
-          start: 'top bottom',
-          end: 'bottom top',
+          start: "top bottom",
+          end: "bottom top",
           scrub: 4,
         },
       });
 
       tl.fromTo(
-        '.tech-row',
+        ".tech-row",
         {
           x: (index) => {
             return index % 2 === 0
@@ -49,8 +49,8 @@ const TechList = ({ slice }: TechListProps): JSX.Element => {
               ? gsap.utils.random(-600, -400)
               : gsap.utils.random(600, 400);
           },
-          ease: 'power1.inOut',
-        }
+          ease: "power1.inOut",
+        },
       );
     }, component);
 
@@ -62,6 +62,7 @@ const TechList = ({ slice }: TechListProps): JSX.Element => {
       data-slice-type={slice.slice_type}
       data-slice-variation={slice.variation}
       ref={component}
+      className="overflow-x-hidden"
     >
       <Bounded as="div">
         <Heading size="xl" as="h2" className="mb-4">
@@ -80,7 +81,7 @@ const TechList = ({ slice }: TechListProps): JSX.Element => {
               <span
                 className="tech-item text-5xl font-extrabold uppercase tracking-tighter"
                 style={{
-                  color: index === 7 && tech_color ? tech_color : 'inherit',
+                  color: index === 7 && tech_color ? tech_color : "inherit",
                 }}
               >
                 {tech_name}
