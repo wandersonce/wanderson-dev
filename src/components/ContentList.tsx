@@ -1,26 +1,26 @@
-'use client';
+"use client";
 
-import { Content, asImageSrc, isFilled } from '@prismicio/client';
-import gsap from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Link from 'next/link';
-import { useEffect, useRef, useState } from 'react';
-import { MdArrowOutward } from 'react-icons/md';
+import { Content, asImageSrc, isFilled } from "@prismicio/client";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
+import { MdArrowOutward } from "react-icons/md";
 
 gsap.registerPlugin(ScrollTrigger);
 
 type ContentListProps = {
   items: Content.BlogPostDocument[] | Content.ProjectDocument[];
-  contentType: Content.ContentindexSlice['primary']['content_type'];
-  fallBackImage: Content.ContentindexSlice['primary']['fallback_item_image'];
-  viewMoreText: Content.ContentindexSlice['primary']['view_more_text'];
+  contentType: Content.ContentindexSlice["primary"]["content_type"];
+  fallBackImage: Content.ContentindexSlice["primary"]["fallback_item_image"];
+  viewMoreText: Content.ContentindexSlice["primary"]["view_more_text"];
 };
 
 export default function ContentList({
   items,
   contentType,
   fallBackImage,
-  viewMoreText = 'Check This',
+  viewMoreText = "Check This",
 }: ContentListProps) {
   const component = useRef(null);
   const revealRef = useRef(null);
@@ -34,7 +34,7 @@ export default function ContentList({
       : fallBackImage;
 
     return asImageSrc(image, {
-      fit: 'crop',
+      fit: "crop",
       w: 220,
       h: 320,
       exp: -10,
@@ -59,14 +59,14 @@ export default function ContentList({
             opacity: 1,
             y: 0,
             duration: 1.3,
-            ease: 'elastic.out(1,0.3)',
+            ease: "elastic.out(1,0.3)",
             scrollTrigger: {
               trigger: item,
-              start: 'top bottom-=100px',
-              end: 'bottom center',
-              toggleActions: 'play none none none',
+              start: "top bottom-=100px",
+              end: "bottom center",
+              toggleActions: "play none none none",
             },
-          }
+          },
         );
       });
       return () => ctx.revert();
@@ -89,7 +89,7 @@ export default function ContentList({
             x: gsap.utils.clamp(0, maxX, mousePos.x - 110),
             y: gsap.utils.clamp(0, maxY, mousePos.y - 160),
             rotation: speed * (mousePos.x > lastMousePos.current.x ? 1 : -1),
-            ease: 'back.out(2)',
+            ease: "back.out(2)",
             duration: 1.3,
             opacity: 1,
           });
@@ -99,8 +99,8 @@ export default function ContentList({
       }, component);
     };
 
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
+    window.addEventListener("mousemove", handleMouseMove);
+    return () => window.removeEventListener("mousemove", handleMouseMove);
   }, [currentItem]);
 
   useEffect(() => {
@@ -122,13 +122,14 @@ export default function ContentList({
             {isFilled.keyText(item.data.title) && (
               <li
                 key={index}
-                className="list-item opacity-0f"
+                className="opacity-0f list-item"
                 onMouseEnter={() => onMouseEnter(index)}
                 ref={(el) => (itemsRef.current[index] = el)}
               >
                 <Link
                   target="_blank"
-                  href={item.data.link_to_source.url || '/'}
+                  // @ts-ignore: Unreachable code error
+                  href={item.data.link_to_source.url || "/"}
                   className="flex flex-col justify-between border-t border-t-slate-100 py-10 text-slate-200 md:flex-row"
                   aria-label={item.data.title}
                 >
@@ -136,7 +137,7 @@ export default function ContentList({
                     <span className="text-3xl font-bold">
                       {item.data.title}
                     </span>
-                    <div className="flex gap-3 text-yellow-400 text-lg font-bold">
+                    <div className="flex gap-3 text-lg font-bold text-yellow-400">
                       {item.tags.map((tag, index) => (
                         <span key={index}>{tag} </span>
                       ))}
@@ -157,7 +158,7 @@ export default function ContentList({
         className="hover-reveal pointer-events-none absolute left-0 top-0 -z-10 h-[320px] w-[220px] rounded-lg bg-cover bg-center opacity-0 transition-[background] duration-300"
         style={{
           backgroundImage:
-            currentItem !== null ? `url(${contentImages[currentItem]})` : '',
+            currentItem !== null ? `url(${contentImages[currentItem]})` : "",
         }}
         ref={revealRef}
       ></div>
