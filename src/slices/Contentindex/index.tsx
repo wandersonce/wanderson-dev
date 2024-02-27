@@ -47,11 +47,15 @@ const Contentindex = async ({
         fallBackImage={slice.primary.fallback_item_image}
       />
 
-      <Heading size="lg" className="mb-8 mt-20">
-        Github Repos
-      </Heading>
+      {contentType !== "Blog" && (
+        <>
+          <Heading size="lg" className="mb-8 mt-20">
+            Github Repos
+          </Heading>
 
-      <GithubList />
+          <GithubList />
+        </>
+      )}
     </Bounded>
   );
 };
