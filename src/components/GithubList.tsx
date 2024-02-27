@@ -26,7 +26,7 @@ export default function GithubList() {
 
     setLoadingState(false);
   }, []);
-
+  console.log(repositories);
   return (
     <div>
       {loadingState && (

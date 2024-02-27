@@ -1,9 +1,10 @@
-import Bounded from '@/components/Bounded';
-import ContentList from '@/components/ContentList';
-import Heading from '@/components/Heading';
-import { createClient } from '@/prismicio';
-import { Content, isFilled } from '@prismicio/client';
-import { PrismicRichText, SliceComponentProps } from '@prismicio/react';
+import Bounded from "@/components/Bounded";
+import ContentList from "@/components/ContentList";
+import GithubList from "@/components/GithubList";
+import Heading from "@/components/Heading";
+import { createClient } from "@/prismicio";
+import { Content, isFilled } from "@prismicio/client";
+import { PrismicRichText, SliceComponentProps } from "@prismicio/react";
 
 /**
  * Props for `Contentindex`.
@@ -17,12 +18,12 @@ const Contentindex = async ({
   slice,
 }: ContentindexProps): Promise<JSX.Element> => {
   const client = createClient();
-  const blogPosts = await client.getAllByType('blog_post');
-  const projects = await client.getAllByType('project');
+  const blogPosts = await client.getAllByType("blog_post");
+  const projects = await client.getAllByType("project");
 
-  const contentType = slice.primary.content_type || 'Blog';
+  const contentType = slice.primary.content_type || "Blog";
 
-  const items = contentType === 'Blog' ? blogPosts : projects;
+  const items = contentType === "Blog" ? blogPosts : projects;
 
   return (
     <Bounded
@@ -45,6 +46,12 @@ const Contentindex = async ({
         viewMoreText={slice.primary.view_more_text}
         fallBackImage={slice.primary.fallback_item_image}
       />
+
+      <Heading size="xl" className="mb-8 mt-20">
+        Github Repos
+      </Heading>
+
+      <GithubList />
     </Bounded>
   );
 };
