@@ -26,38 +26,42 @@ export default function GithubList() {
 
   useEffect(() => {
     setLoadingState(true);
-
-    fetch(
-      "https://api.github.com/users/wandersonce/repos?per_page=100&sort=updated",
-    )
-      .then((response) => response.json())
-      .then((data) => setRepositories(data))
-      .finally(() => {
-        let ctx = gsap.context(() => {
-          itemsRef.current.forEach((item) => {
-            gsap.fromTo(
-              item,
-              { opacity: 0, y: 20 },
-              {
-                opacity: 1,
-                y: 0,
-                duration: 1.3,
-                ease: "elastic.out(1,0.3)",
-                scrollTrigger: {
-                  trigger: item,
-                  start: "top bottom-=100px",
-                  end: "bottom center",
-                  toggleActions: "play none none none",
-                },
-              },
-            );
-          });
-          return () => ctx.revert();
-        }, component);
-      });
+    const fetchData = async () => {
+      fetch(
+        "https://api.github.com/users/wandersonce/repos?per_page=100&sort=updated",
+      )
+        .then((response) => response.json())
+        .then((data) => setRepositories(data));
+    };
+    fetchData();
 
     setLoadingState(false);
   }, []);
+
+  useEffect(() => {
+    console.log(repositories);
+    let ctx = gsap.context(() => {
+      itemsRef.current.forEach((item) => {
+        gsap.fromTo(
+          item,
+          { opacity: 0, y: 20 },
+          {
+            opacity: 1,
+            y: 0,
+            duration: 1.3,
+            ease: "elastic.out(1,0.3)",
+            scrollTrigger: {
+              trigger: item,
+              start: "top bottom-=100px",
+              end: "bottom center",
+              toggleActions: "play none none none",
+            },
+          },
+        );
+      });
+      return () => ctx.revert();
+    }, component);
+  }, [repositories]);
 
   return (
     <div>
