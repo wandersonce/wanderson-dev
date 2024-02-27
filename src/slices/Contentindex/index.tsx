@@ -47,7 +47,7 @@ const Contentindex = async ({
         fallBackImage={slice.primary.fallback_item_image}
       />
 
-      <Heading size="xl" className="mb-8 mt-20">
+      <Heading size="lg" className="mb-8 mt-20">
         Github Repos
       </Heading>
 
