@@ -53,8 +53,8 @@ export default function GithubList() {
             );
           });
           return () => ctx.revert();
-        });
-      }, component);
+        }, component);
+      });
 
     setLoadingState(false);
   }, []);
