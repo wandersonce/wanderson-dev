@@ -26,6 +26,7 @@ export default function GithubList() {
 
   useEffect(() => {
     setLoadingState(true);
+    //Fetch data from Github
     const fetchData = async () => {
       fetch(
         "https://api.github.com/users/wandersonce/repos?per_page=100&sort=updated",
