@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { Urbanist } from "next/font/google";
-import { GoogleTagManager } from "@next/third-parties/google";
+import { GoogleAnalytics } from "@next/third-parties/google";
 import "./globals.css";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -39,7 +39,7 @@ export default function RootLayout({
         <div className='pointer-events-none absolute inset-0 -z-40 h-full bg-[url("/noiseGif.gif")] opacity-10 mix-blend-soft-light'></div>
       </body>
       <PrismicPreview repositoryName={repositoryName} />
-      <GoogleTagManager gtmId="G-MV4EE81ES7" />
+      <GoogleAnalytics gaId="G-MV4EE81ES7" />
     </html>
   );
 }
