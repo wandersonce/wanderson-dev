@@ -117,40 +117,47 @@ export default function ContentList({
         className="grid border-b border-b-slate-100 "
         onMouseLeave={onMouseLeave}
       >
-        {items.map((item, index) => (
-          <>
-            {isFilled.keyText(item.data.title) && (
-              <li
-                key={index}
-                className="flex max-w-sm opacity-0 md:list-item md:max-w-full"
-                onMouseEnter={() => onMouseEnter(index)}
-                ref={(el) => (itemsRef.current[index] = el)}
-              >
-                <Link
-                  target="_blank"
-                  // @ts-ignore: Unreachable code error
-                  href={item.data.link_to_source.url || "/"}
-                  className="flex flex-col items-start border-t border-t-slate-100 py-10 text-slate-200 md:flex-row md:justify-between"
-                  aria-label={item.data.title}
+        {items
+          .sort(function (a: any, b: any) {
+            // Turn your strings into dates, and then subtract them
+            // to get a value that is either negative, positive, or zero.
+            // @ts-ignore
+            return new Date(b.data.date) - new Date(a.data.date);
+          })
+          .map((item, index) => (
+            <>
+              {isFilled.keyText(item.data.title) && (
+                <li
+                  key={index}
+                  className="flex max-w-sm opacity-0 md:list-item md:max-w-full"
+                  onMouseEnter={() => onMouseEnter(index)}
+                  ref={(el) => (itemsRef.current[index] = el)}
                 >
-                  <div className="flex flex-col">
-                    <span className="text-3xl font-bold">
-                      {item.data.title}
-                    </span>
-                    <div className="flex flex-wrap gap-3 text-lg font-bold text-yellow-400">
-                      {item.tags.map((tag, index) => (
-                        <span key={index}>{tag} </span>
-                      ))}
+                  <Link
+                    target="_blank"
+                    // @ts-ignore: Unreachable code error
+                    href={item.data.link_to_source.url || "/"}
+                    className="flex flex-col items-start border-t border-t-slate-100 py-10 text-slate-200 md:flex-row md:justify-between"
+                    aria-label={item.data.title}
+                  >
+                    <div className="flex flex-col">
+                      <span className="text-3xl font-bold">
+                        {item.data.title}
+                      </span>
+                      <div className="flex flex-wrap gap-3 text-lg font-bold text-yellow-400">
+                        {item.tags.map((tag, index) => (
+                          <span key={index}>{tag} </span>
+                        ))}
+                      </div>
                     </div>
-                  </div>
-                  <span className="ml-0 flex items-start gap-2 text-xl font-medium md:ml-auto md:items-center">
-                    {viewMoreText} <MdArrowOutward />
-                  </span>
-                </Link>
-              </li>
-            )}
-          </>
-        ))}
+                    <span className="ml-0 flex items-start gap-2 text-xl font-medium md:ml-auto md:items-center">
+                      {viewMoreText} <MdArrowOutward />
+                    </span>
+                  </Link>
+                </li>
+              )}
+            </>
+          ))}
       </ul>
 
       {/* HOVER ELEMENT */}
